@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<!--
+/*
+ * jQuery File Upload Plugin jQuery UI Demo
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * https://opensource.org/licenses/MIT
+ */
+-->
+<html lang="en">
+<head>
+  <!-- Force latest IE rendering engine or ChromeFrame if installed -->
+  <!--[if IE]>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <![endif]-->
+  <meta charset="utf-8">
+  <title>jQuery File Upload Demo - jQuery UI version</title>
+  <meta name="description"
+        content="File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads and client-side image resizing. Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+<div style="width: 100%; height: 100%">
+  <p>check the player</p>
+  <video id="video" style="width: 60%; height: 60%;border: 1px solid #0a76a4">
+
+  </video>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<!-- Or if you want a more recent canary version -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@canary"></script> -->
+
+<script>
+  var video = document.getElementById('video');
+  if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource('http://ipfs.ptelatino.com/ipfs/Qmewtop6xHgi2VkRSYrv5Lwy3Wiw2EigzJqm878KTujKit');
+    hls.attachMedia(video);
+    // hls.on(Hls.Events.MANIFEST_LOADED, function () {
+      video.play();
+    // });
+  }
+  // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+  // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+  // This is using the built-in support of the plain video element, without using hls.js.
+  // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
+  // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
+  else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8';
+    video.addEventListener('loadedmetadata', function () {
+      video.play();
+    });
+  }
+</script>
+</body>
+</html>
